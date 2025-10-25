@@ -3,7 +3,7 @@
       ,[ITEMNAME]
       ,[FICHENO]
       ,[DATE_]
-      ,[AMOUNT]
+      ,[AMOUNT] 
       ,[PRICE]
       ,[LINENETTOTAL]
       ,[LINENET]
