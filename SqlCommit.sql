@@ -179,3 +179,41 @@ GROUP BY BRAND ,CATEGORY_NAME1,CATEGORY_NAME2
 ORDER BY BRAND,CATEGORY_NAME1,CATEGORY_NAME2 DESC
 --BU SORGU İLE ULKER MARKASI DIŞINDAKİ TÜM MARKALARIN KATEGORİ BAZINDA TOPLAM SATIŞ DEĞERİNİ GETİRİRİZ.
 
+------------------5.bölüm:VERİ TİPLERİ--------------------
+--SQL SERVER'DA KULLANILAN TEMEL VERİ TİPLERİ ŞUNLARDIR:
+
+--1. SAYISAL VERİ TİPLERİ:
+    INT: Tam sayılar için kullanılır. 4 byte yer kaplar.
+    FLOAT: Ondalıklı sayılar için kullanılır. 8 byte yer kaplar.
+    DECIMAL(p,s): Belirli bir hassasiyet ve ölçek ile ondalıklı sayılar için kullanılır.10^38-1 aralığında değer alabilir.
+    BIGINT: Çok büyük tam sayılar için kullanılır. 8 byte yer kaplar.
+    SMALLINT: Küçük tam sayılar için kullanılır. 2 byte yer kaplar.
+
+--2. KARAKTER VE METİN VERİ TİPLERİ:
+    VARCHAR(n): Değişken uzunlukta karakter dizileri için kullanılır. n, maksimum karakter sayısını belirtir.girdiğin karakter sayısına göre yer kaplar.
+    CHAR(n): Sabit uzunlukta karakter dizileri için kullanılır. n, karakter sayısını belirtir.girdiğin veriden bağımsız her zaman n kadar yer kaplar.
+    TEXT: Uzun metin verileri için kullanılır. Maksimum 2 GB veri depolayabilir.Artık kullanılan bir veri tipi değildir.
+    NCHAR(n): Unicode karakter dizileri için kullanılır. n, karakter sayısını belirtir. Uluslararası bir karakter seti için kullanırız daha çok.
+    NVARCHAR(n): Değişken uzunlukta Unicode karakter dizileri için kullanılır. n, maksimum karakter sayısını belirtir. Uluslararası bir karakter seti için kullanırız daha çok.
+
+--3. TARİH VE ZAMAN VERİ TİPLERİ:
+
+    DATE:SADECE TARİH BİLGİSİ GİREBİLİRİZ. YYYY-MM-DD formatında tarih depolar.
+    DATETIME: Hem tarih hem de zaman bilgisi için kullanılır. 1753-01-01 ile 9999-12-31 tarih aralığını ve 00:00:00 ile 23:59:59.997 zaman aralığını kapsar.
+    TIME: Sadece zaman bilgisi için kullanılır. 00:00:00 ile 23:59:59.9999999 zaman aralığını kapsar.
+    SMALLDATETIME: Hem tarih hem de zaman bilgisi için kullanılır. 1900-01-01 ile 2079-06-06 tarih aralığını ve 00:00:00 ile 23:59:59 zaman aralığını kapsar.
+    DATETIME2: Geniş tarih ve zaman aralığı için kullanılır. 0001-01-01 ile 9999-12-31 tarih aralığını ve 00:00:00 ile 23:59:59.9999999 zaman aralığını kapsar.MİCROSECOND DESTEĞİ VARDIR.DAHA DETAYLI ZAMAN İŞLEMLERİ İÇİN KULLANILIR.
+
+--4. DİĞER VERİ TİPLERİ:
+    LONGITUDE: Coğrafi koordinatlar için kullanılır.
+    LATITUDE: Coğrafi koordinatlar için kullanılır.
+    GEOGRAPHY: Coğrafi veriler için kullanılır.
+    BINARY(n): Sabit uzunlukta ikili veri için kullanılır. n, byte sayısını belirtir.ÇOK KULLANILMIYOR.
+    VARBINARY(n): Değişken uzunlukta ikili veri için kullanılır. n, maksimum byte sayısını belirtir.ÇOK KULLANILMIYOR.
+    IMAGE: Görüntü verileri için kullanılır. Maksimum 2 GB veri depolayabilir.Artık kullanılan bir veri tipi değildir.
+    XML: XML verileri için kullanılır
+    UNIQUEIDENTIFIER: Benzersiz kimlikler için kullanılır. GUID (Globally Unique Identifier) formatında veri depolar.EĞER DÜNYADA BENSERZİR BİR VERİ OLUŞTURMAK İSTİYORSANIZ KULLANILIR.
+    
+
+
+      
