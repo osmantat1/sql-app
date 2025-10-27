@@ -213,7 +213,38 @@ ORDER BY BRAND,CATEGORY_NAME1,CATEGORY_NAME2 DESC
     IMAGE: Görüntü verileri için kullanılır. Maksimum 2 GB veri depolayabilir.Artık kullanılan bir veri tipi değildir.
     XML: XML verileri için kullanılır
     UNIQUEIDENTIFIER: Benzersiz kimlikler için kullanılır. GUID (Globally Unique Identifier) formatında veri depolar.EĞER DÜNYADA BENSERZİR BİR VERİ OLUŞTURMAK İSTİYORSANIZ KULLANILIR.
-    
 
 
-      
+------------------6.BÖLÜM: RDSMS (İLİŞKİSEL VERİ TABANI YÖNETİM SİSTEMİ)-------------------
+RDMS (İlişkisel Veri Tabanı Yönetim Sistemi)
+    RDMS, verilerin tablolar halinde düzenlendiği ve bu tablolar arasındaki ilişkilerin
+    tanımlandığı bir veri tabanı yönetim sistemidir.
+    SQL SERVER, ORACLE, MYSQL, POSTGRESQL gibi birçok veritabanı RDMS kategorisine girer.  
+    örnek : 
+        bir okul veritabanında öğrenciler, dersler ve öğretmenler tabloları olabilir.
+        Öğrenciler tablosu öğrenci bilgilerini, dersler tablosu ders bilgilerini,
+        öğretmenler tablosu ise öğretmen bilgilerini içerir.
+        Bu tablolar arasındaki ilişkiler, öğrencilerin hangi dersleri aldığı
+        ve hangi öğretmenlerin bu dersleri verdiği gibi bilgileri tanımlar. 
+    -- daha sonra ilişkisel veri tabanı yönetim sistemleri ile ilgili detaylı bilgi verilecek.
+
+    ÖRNEK: E -Ticaret Veritabanı
+    Bir e-ticaret veritabanında aşağıdaki tablolar olabilir:
+     ÖNCELİKLE BİR USER TABLOSU OLUŞTURALIM EXCELDEN;
+
+     USER
+     - user_id (INT, PRIMARY KEY)
+     - username (VARCHAR(50))
+     - email (VARCHAR(100))
+     - password (VARCHAR(100))
+     - createddate (DATETIME)
+     - birthdate (DATE)
+     - telnr1 (VARCHAR(15))
+     - telnr2 (VARCHAR(15))    
+
+     ADRESS
+    -COUNTRY (VARCHAR(50))
+    -CITY (VARCHAR(50))
+    -DISTRICT (VARCHAR(50))
+    -POSTALCODE (VARCHAR(10))
+    -ADDRESSTEXT (VARCHAR(100))     
