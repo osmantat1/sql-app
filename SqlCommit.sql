@@ -394,6 +394,229 @@ Tam dediğiniz gibi. COUNTRY tablosundaki ID bizim Primary Key (PK - Birincil An
     -- Böylece, bir ADDRESS kaydının hangi ülkeye ait olduğunu kolayca bulabiliriz.
     Bu yapı, veritabanımızın hem daha az yer kaplamasını sağlar hem de veri bütünlüğünü korur.
 
+----------------7.BÖLÜM: NORMALİZASYON KAVRAMI-------------------
+-- Normalizasyon, veritabanı tasarımında veri tekrarını önlemek ve veri bütünlüğünü sağlamak için kullanılan bir tekniktir.
+-- Normalizasyonun temel amacı, veritabanındaki verilerin tutarlı, düzenli ve verimli bir şekilde depolanmasını sağlamaktır.
+-- Normalizasyon, veritabanı tablolarını belirli kurallara göre bölerek veri tekrarını azaltır ve veri bağımlılıklarını minimize eder.
+-- Normalizasyonun temel kuralları şunlardır:   
+-- 1. Birinci Normal Form (1NF): Tablodaki her sütun tek bir değeri içermelidir. Yani, bir sütunda birden fazla değer bulunmamalıdır.
+-- 2. İkinci Normal Form (2NF): Tablodaki her süt       
+un, birincil anahtara tam bağımlı olmalıdır. Yani, bir sütun birincil anahtarın sadece bir kısmına bağlı olmamalıdır.
+-- 3. Üçüncü Normal Form (3NF): Tablodaki her sütun, birincil anahtara doğrudan bağlı olmalıdır. Yani, bir sütun başka bir sütuna bağlı olmamalıdır.
+-- Normalizasyonun avantajları şunlardır:                   
+-- Veri Tekrarını Azaltır: Normalizasyon, veritabanındaki veri tekrarını minimize eder, bu da depolama alanını optimize eder.
+-- Veri Bütünlüğünü Sağlar: Normalizasyon, veri bağımlılıklarını azaltarak veri bütünlüğünü korur.
+-- Veri Güncellemelerini Kolaylaştırır: Normalizasyon, veri güncellemelerini daha kolay ve tutarlı hale getirir.
+-- Normalizasyonun dezavantajları şunlardır:            
+-- Performans Sorunları: Normalizasyon, bazı durumlarda sorgu performansını olumsuz etkileyebilir, çünkü veriler birden fazla tabloya bölünmüştür.
+-- Karmaşıklık: Normalizasyon, veritabanı tasarımını daha karmaşık hale getirebilir, bu da yönetimi zorlaştırabilir.
+--JOIN KULLANIMI:
+--JOIN, SQL'de birden fazla tabloyu birleştirmek için kullanılan bir komuttur.
+--JOIN, iki veya daha fazla tabloyu belirli bir koşula göre birleştirir ve sonuç olarak tek bir sonuç kümesi döner.
+-- BİR VERİ BİRDEN FAZLA TABLODA TUTULUYORSA JOİN KULLANARAK BU TABLOLARI BİRLEŞTİRİYORUZ.
+-- ÖRNEK:
+
+SELECT USER_.USERNAME_,USER_.NAMESURNAME ,USER_.EMAIL,
+USER_.TELNR1,USER_.TELNR2,ADDRES.ADDRESSTEXT
+FROM USER_ 
+JOIN ADDRES ON USER_.ID=ADDRES.USERID
+WHERE USER_.ID =1
+
+SELECT *FROM ADDRES WHERE USERID=1
+--BU SORGU İLE USER_ TABLOSUNDAKİ KULLANICI BİLGİLERİNİ VE İLİŞKİLENDİRİLMİŞ OLARAK ADRES BİLGİLERİNİ GETİRİRİZ.
+--SELECT *FROM ADDRES WHERE USERID=1 BİZ BURADA ADDRESS TABLOSUNDAKİ USERID'Sİ 1 OLAN ADRES BİLGİLERİNİ GETİRİRİZ.
+--USERID SADECE ADDRESS TABLOSUNDA DEĞİL BAŞKA TABLOLARDA DA OLABİLİR BU YÜZDEN JOİN KULLANARAK HANGİ TABLODAN GELDİĞİNİ BELİRTMEK İSTEDİK.
 
 
 
+--JOIN TÜRLERİ:
+-- INNER JOIN: İki tablodaki eşleşen kayıtları döner.
+-- LEFT JOIN: Sol tablodaki tüm kayıtları ve sağ tablodaki eşleşen kayıtları döner.
+-- RIGHT JOIN: Sağ tablodaki tüm kayıtları ve sol tablodaki eşleşen kayıtları döner.
+-- FULL JOIN: Her iki tablodaki tüm kayıtları döner, eşleşmeyen kayıtlar NULL olarak gösterilir.
+-- ÖRNEK:
+-- INNER JOIN ÖRNEĞİ:
+SELECT USER_.USERNAME_,ADDRES.ADDRESSTEXT
+FROM USER_
+INNER JOIN ADDRES ON USER_.ID=ADDRES.USERID
+WHERE USER_.ID IN (100,101,102)
+
+SELECT * FROM ADDRES WHERE USERID IN (100,101,102)
+--BU SORGU İLE USER_ TABLOSUNDAKİ KULLANICI BİLGİLERİNİ VE İLİŞKİLENDİRİLMİŞ OLARAK ADRES BİLGİLERİNİ GETİRİRİZ.
+--AYRICA USERID'Sİ 100,101,102 OLAN KULLANICILARIN ADRES BİLGİLERİNİ FİLTRELERİZ.
+
+-- LEFT JOIN ÖRNEĞİ:
+SELECT USER_.USERNAME_,ADDRES.ADDRESSTEXT
+FROM USER_  
+LEFT JOIN ADDRES ON USER_.ID=ADDRES.USERID
+WHERE USER_.ID IN (100,101,102)
+
+SELECT * FROM ADDRES WHERE USERID IN (100,101,102)
+--EĞER 102 NO'LU KULLANICININ ADRESİ YOKSA BİZE NULL DEĞERİ DÖNECEKTİR.
+
+-- RIGHT JOIN ÖRNEĞİ:
+SELECT USER_.USERNAME_,ADDRES.ADDRESSTEXT
+FROM USER_
+RIGHT JOIN ADDRES ON USER_.ID=ADDRES.USERID
+WHERE USER_.ID IN (100,101,102)
+
+SELECT * FROM ADDRES WHERE USERID IN (100,101,102)
+--EĞER 102 NOLU KULLANICININ ADRESİ YOKSA BİZE SADECE ADRESİ OLAN KULLANICILARIN BİLGİLERİNİ GETİRİR.
+-- FULL JOIN ÖRNEĞİ:
+SELECT USER_.USERNAME_,ADDRES.ADDRESSTEXT
+FROM USER_  
+FULL JOIN ADDRES ON USER_.ID=ADDRES.USERID
+--BU ÖRNEKLERDE FARKLI JOIN TÜRLERİNİN NASIL KULLANILDIĞINI GÖREBİLİRİZ.
+--JOIN TÜRLERİNİ KULLANARAK İHTİYACIMIZA GÖRE TABLOLARI BİRLEŞTİREBİLİRİZ.
+
+--ŞİMDİ USER_ KULLANMAK YERİNE U_ KULLANALIM,DAHA BASİT OLMASI İÇİN.BUNUN İÇİN DE ALİAS KULLANACAĞIZ.
+Elbette, SQL'de ALIAS (Takma Ad) kullanımı üzerine bir çalışma dosyasını hemen hazırlıyorum.
+
+Bu, özellikle az önce yazdığınız JOIN sorgularını çok daha temiz ve okunaklı hale getirmek için vazgeçilmez bir araçtır.
+
+🚀 SQL'de ALIAS (Takma Ad) Kullanımı Çalışma Dosyası
+Bu dosyada, SQL sorgularında ALIAS'ın ne olduğunu, neden bu kadar önemli olduğunu ve ne zaman/nerede kullanılacağını pratik örneklerle öğreneceğiz.
+
+1. ALIAS Nedir?
+ALIAS, bir SQL sorgusu içinde tablolara veya sütunlara geçici bir "takma ad" veya "kısaltma" vermektir.
+
+Bu takma ad, sadece o sorgunun çalıştırıldığı süre boyunca geçerlidir; veritabanındaki tablonun veya sütunun gerçek adını değiştirmez.
+
+Temel anahtar kelime genellikle AS'tir.
+
+2. Temel Yazım (Syntax)
+İki temel kullanımı vardır: Tablo Alias'ı ve Sütun Alias'ı.
+
+Tablo Alias'ı:
+
+SQL
+
+FROM TabloAdi AS TakmaAd
+-- (Çoğu SQL diyalektinde 'AS' kelimesi olmadan da çalışır)
+FROM TabloAdi TakmaAd
+Sütun Alias'ı:
+
+SQL
+
+SELECT SütunAdi AS 'Yeni Anlamlı Ad'
+FROM ...
+3. Neden ve Ne Zaman Kullanılır? (En Önemli Kısım)
+ALIAS kullanmak bir lüks değil, iyi kod yazmak için bir zorunluluktur. Başlıca kullanım alanları:
+
+A. Karmaşık JOIN Sorgularını Basitleştirmek (Okunabilirlik)
+Sizin de az önce yaptığınız gibi JOIN kullanmaya başladığınızda, sorgular hızla karmaşıklaşır. Sürekli USER_, BASKETDETAIL, ADDRESS gibi tam tablo adlarını yazmak sorguyu okumayı zorlaştırır.
+
+Örnek (Alias Olmadan): Sürekli USER_. ve ADDRESS. yazmak zorundasınız.
+
+SQL
+
+SELECT USER_.USERNAME_, ADDRESS.ADDRESSTEXT
+FROM USER_
+INNER JOIN ADDRESS ON USER_.ID = ADDRESS.USERID
+WHERE USER_.ID = 100;
+Örnek (Alias Kullanarak): USER_ yerine U, ADDRESS yerine A kullanırız. Sorgu anında kısalır ve okunması kolaylaşır.
+
+SQL
+
+SELECT U.USERNAME_, A.ADDRESSTEXT
+FROM USER_ AS U
+INNER JOIN ADDRESS AS A ON U.ID = A.USERID
+WHERE U.ID = 100;
+(Not: FROM USER_ U şeklinde AS olmadan da çalışır, ama AS kullanmak daha açıklayıcıdır.)
+
+B. Hesaplama ve Fonksiyon Sonuçlarını Anlamlandırmak
+Bir sorguda COUNT (sayma), SUM (toplama), AVG (ortalama) gibi fonksiyonlar kullandığınızda veya matematiksel bir işlem yaptığınızda, SQL bu sütuna otomatik bir ad verir (bazen "No Column Name" veya "Expr1001" gibi anlamsız bir şey).
+
+ALIAS ile bu sonuca anlamlı bir isim veririz.
+
+Örnek (Alias Olmadan): Dönen sonucun sütun başlığı anlamsız olacaktır.
+
+SQL
+
+SELECT COUNT(*)
+FROM USER_;
+Sonuç: | (No column name) | | :---: | | 1500 |
+
+Örnek (Alias Kullanarak):
+
+SQL
+
+SELECT COUNT(*) AS ToplamKullaniciSayisi
+FROM USER_;
+Sonuç: | ToplamKullaniciSayisi | | :---: | | 1500 |
+
+C. Aynı Adlı Sütunları Ayırt Etmek (JOIN'lerde Zorunluluk)
+İki tabloyu JOIN yaptığınızda, her iki tabloda da ID veya NAME gibi aynı ada sahip sütunlar olabilir.
+
+ALIAS kullanmazsanız, SQL SELECT ID yazdığınızda hangi tablonun ID'sinden bahsettiğinizi bilemez ve "Ambiguous column name" (Belirsiz sütun adı) hatası verir.
+
+Hatalı Örnek: Hem USER_ hem de BASKET tablosunda ID sütunu var.
+
+SQL
+
+SELECT ID, USERNAME_, TOTALPRICE
+FROM USER_
+INNER JOIN BASKET ON USER_.ID = BASKET.USERID;
+-- HATA: "Ambiguous column name 'ID'."
+Doğru Örnek (Alias Kullanarak): Alias kullanarak SQL'e hangi ID'yi istediğimizi net olarak söyleriz.
+
+SQL
+
+SELECT
+    U.ID AS KullaniciID,  -- Kullanıcının ID'si
+    B.ID AS SepetID,      -- Sepetin ID'si
+    U.USERNAME_,
+    B.TOTALPRICE
+FROM
+    USER_ AS U
+INNER JOIN
+    BASKET AS B ON U.ID = B.USERID;
+4. Sizin Sorgularınız Üzerinden ALIAS Alıştırması
+İşte az önce JOIN örneklerinde yazdığınız sorguların ALIAS kullanılarak temizlenmiş halleri.
+
+1. INNER JOIN (Temiz Hali)
+
+SQL
+
+SELECT U.USERNAME_, A.ADDRESSTEXT
+FROM USER_ AS U
+INNER JOIN ADDRESS AS A ON U.ID = A.USERID
+WHERE U.ID IN (100,101,102);
+2. LEFT JOIN (Temiz Hali)
+
+SQL
+
+SELECT U.USERNAME_, A.ADDRESSTEXT
+FROM USER_ AS U
+LEFT JOIN ADDRESS AS A ON U.ID = A.USERID
+WHERE U.ID IN (100,101,102);
+Gördüğünüz gibi, U ve A kısaltmaları sorguyu hem yazmayı hızlandırır hem de okumayı çok daha kolay hale getirir.
+
+Özet
+Ne: Tablo ve sütunlara geçici takma ad (AS).
+
+Nerede: SELECT (sütun için) ve FROM/JOIN (tablo için) ifadelerinde.
+
+-- ÖRNEK SORGU: ID 1 OLAN KULLANICININ ADSOYAD,EMAİL,TLFNO,ID,KULLANICI ADINI ALAN KAÇ TANE ADRESİ VAR VE NELER
+SELECT
+    U.USERNAME_ AS KullaniciAdi,
+    U.NAMESURNAME AS AdSoyad,
+    U.EMAIL AS Mail,
+    U.TELNR1 AS Telefon,
+    COUNT(A.ID) AS ToplamAdresSayisi
+FROM
+    USER_ AS U
+/* Kullanıcının hiç adresi olmasa bile (sonucun '0' gelmesi için) 
+INNER JOIN yerine LEFT JOIN kullanmak daha garantidir.
+*/
+LEFT JOIN
+    ADDRES AS A ON U.ID = A.USERID
+
+GROUP BY
+    /* Hata almamak için kural:
+    COUNT() dışındaki tüm 'SELECT' sütunları 'GROUP BY' içinde de olmalıdır.
+    */
+    U.USERNAME_,
+    U.NAMESURNAME,
+    U.EMAIL,
+    U.TELNR1;
