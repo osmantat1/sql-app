@@ -367,3 +367,33 @@ CREATE TABLE INVOICEDETAIL (
     PRICE FLOAT,
     TOTALPRICE FLOAT
 );
+ŞİMDİ ÖZET GEÇİYORUM BİZ ADREES ADINDA BİR TABLO OLUŞTURDUK BUNUN İÇİNDE
+ COUNTRYID CITYID DISTRICTID OLUSTURDUK VE SONASINDA CIT COUNTRY DISTRICT İSİMLİ TABLOLAR OLUSTURDUK
+  BU TABLOLARDA ID ADINDA BİR VARİABLE OLUSTURDUK VE COUNTRYID CITYID GİBİ ADRESS TABLOSUNDAKİ İD İÇERENLERLE İLİŞKİ KURDUK
+   BURDAKİ ACOUNTRYID COUNTRY NİN İÇİNDEKİ İD İLE AYNI DEMEK İSTEDİK BUNUN SEBEBİ DE
+    FARKLI TABLOLARDA VERİLERİ DAHA DÜZENLİ VERİ TUTABİLMEK BİR KİŞİNİN BİRDEN FAZLA ADRESİ OLABİLİYOR
+ VE BU VERİLER FARKLI TABLOLARDA TUTULDUĞU İÇİN BUNLARI BİRLEŞTİRMEK LAZIM BU YÜZDEN DE JOİN KULLAMDIK
+
+ Anlattığınız her şey %100 doğru. Yaptığımız bu tasarıma "İlişkisel Veritabanı Normalizasyonu" deniyor ve tam olarak sizin belirttiğiniz nedenlerle yapılıyor.
+
+Neden Tabloları Ayırdık? (Normalizasyon)
+
+Veri Tekrarını Önlemek: Haklısınız.
+ COUNTRY, CITY gibi tabloları ayırmasaydık, 
+ her adres satırına "Türkiye", "İstanbul", "Kadıköy" gibi bilgileri tekrar tekrar metin olarak yazmak zorunda kalacaktık. 
+ Bu, hem milyonlarca satırda devasa bir yer israfına yol açar hem de veri girişinde ("İstanbul" vs "Istanbul") tutarsızlık yaratır.
+
+Şimdi ise "Türkiye" (ID: 1) bilgisini COUNTRY tablosunda sadece bir kez tutuyoruz. ADDRESS tablosunda ise sadece 1 yazıyoruz. Çok daha verimli.
+
+Tabloları Nasıl İlişkilendirdik? (Anahtarlar)
+
+Tam dediğiniz gibi. COUNTRY tablosundaki ID bizim Primary Key (PK - Birincil Anahtar) değerimizdir (benzersiz tanımlayıcı).
+
+    ADDRESS tablosundaki COUNTRYID ise Foreign Key (FK - Yabancı Anahtar) değeridir.
+   -- Bu, ADDRESS tablosundaki COUNTRYID'nin COUNTRY tablosundaki ID ile eşleştiği anlamına gelir.
+    -- Böylece, bir ADDRESS kaydının hangi ülkeye ait olduğunu kolayca bulabiliriz.
+    Bu yapı, veritabanımızın hem daha az yer kaplamasını sağlar hem de veri bütünlüğünü korur.
+
+
+
+
