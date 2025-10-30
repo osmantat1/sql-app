@@ -646,3 +646,75 @@ FROM USER_ AS U
 INNER JOIN BASKET B ON B.USERID=U.ID
 INNER JOIN BASKETDETAIL BD ON BD.BASKETID=B.ID
 GROUP BY U.USERNAME_,U.NAMESURNAME
+
+
+
+
+------------------------9.BÖLÜM: ALT SORGU (SUBQUERY)-------------------------
+-- Alt Sorgu (Subquery), bir SQL sorgusu içinde başka bir SQL sorgusunun kullanılmasıdır.
+-- Alt sorgular, genellikle WHERE, HAVING veya FROM gibi SQL ifadelerinde kullanılır
+-- Alt sorgular, ana sorgunun bir parçası olarak çalışır ve genellikle ana sorgunun filtreleme veya hesaplama işlemlerine yardımcı olur.
+-- Alt sorgular, genellikle parantez içinde yazılır ve ana sorgunun bir parçası olarak değerlendirilir.
+-- ÖRNEK:   
+-- Alt Sorgu ile belirli bir departmanda çalışanların listesini getirme
+SELECT * FROM EMPLOYEES
+WHERE DEPARTMENT_ID = (
+    SELECT DEPARTMENT_ID FROM DEPARTMENTS
+    WHERE DEPARTMENT_NAME = 'Sales'
+);
+SQL-- de SUBQUERY (Alt Sorgu) Çalışma Dosyası
+--Bu dosyada, bir sorgu içinde başka bir sorgu çalıştırma tekniği olan SUBQUERY'yi inceleyeceğiz.
+
+1. SUBQUERY Nedir?
+SUBQUERY, en basit tanımıyla, bir SQL sorgusu içine gömülmüş başka bir SQL sorgusudur.
+
+Ana sorgu (dıştaki) çalışırken, alt sorgu (içteki) ona bir değer, bir liste veya geçici bir tablo sağlar. Genellikle parantez () içinde yazılırlar.
+
+2. Neden ve Ne Zaman Kullanılır?
+SUBQUERY, ana sorgunuzu çalıştırmak için ihtiyacınız olan ama o an elinizde olmayan bir veriyi elde etmek için kullanılır.
+
+--"En yüksek fiyata sahip ürün hangisidir?"
+
+Problem: En yüksek fiyatı bilmiyorsunuz.
+
+Çözüm: Önce en yüksek fiyatı (MAX(PRICE)) bulan bir alt sorgu yazarsınız, sonra ana sorguda fiyatı bu değere eşit olan ürünü bulursunuz.
+
+--"Hiç sepetine ürün eklememiş kullanıcılar kimlerdir?"
+
+Problem: Kimin sepetine ürün eklediğini bilmiyorsunuz.
+
+--Çözüm: Önce BASKET tablosundan sepeti olan tüm USERID'leri bir alt sorgu ile listeletirsiniz, sonra ana sorguda USER_ tablosunda ID'si bu listede olmayanları (NOT IN) bulursunuz.
+
+3. En Sık Kullanım Yerleri ve Örnekleri
+Alt sorguların nerede kullanıldığına göre üç ana türü vardır:
+
+A. WHERE İfadesinde Kullanım (En Yaygın)
+Ana sorguyu filtrelemek için kullanılır.
+
+1. Tek Değer Döndüren (Scalar) Subquery: Alt sorgu, ana sorguya (=, >, <, !=) gibi operatörlerle karşılaştırma yapabilmesi için tek bir değer (tek satır, tek sütun) döndürür.
+
+Senaryo: --"En pahalı ürünü (ITEM) bulun."
+ SELECT ITEMNAME, PRICE
+FROM ITEM
+WHERE PRICE = (SELECT MAX(PRICE) FROM ITEM);
+ --DAHA ÖNCE HİÇ SATILMAMIS ÜRÜNLERİ LİSTELEMEK İSTİYORUZ.
+ SELECT 
+I.ITEMNAME,I.PRICE
+FROM ITEM AS I
+LEFT JOIN ORDERDETAIL AS OD ON I.ID=OD.ITEMID
+WHERE OD.ID IS NULL
+--BU JOIN İLE VERİ ALMA
+
+
+SELECT
+    ITEMNAME,
+    PRICE
+FROM
+    ITEM
+WHERE
+    ID NOT IN (
+        -- Bu alt sorgu, satılmış olan TÜM ürünlerin
+        -- (tekrarları da içerebilir) ID listesini döndürür
+        SELECT ITEMID FROM ORDERDETAIL
+    );
+--BU DA subquery İLE VERİ ALMA     
